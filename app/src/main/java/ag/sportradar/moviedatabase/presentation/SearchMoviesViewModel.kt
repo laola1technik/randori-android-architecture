@@ -15,7 +15,7 @@ class SearchMoviesViewModel(
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
-    private val viewState = MutableLiveData<SearchResultViewState>(SearchResultViewState.Loading)
+    val viewState = MutableLiveData<SearchResultViewState>(SearchResultViewState.Loading)
 
     val onQueryTextListener = object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
@@ -24,7 +24,6 @@ class SearchMoviesViewModel(
         }
 
         override fun onQueryTextChange(newText: String?) = false
-
     }
 
     fun search(name: String) {
