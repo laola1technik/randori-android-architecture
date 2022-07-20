@@ -1,8 +1,12 @@
 package ag.sportradar.moviedatabase.omdb
 
 import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
 
-class OmDbFakeApi : OMDbApi {
+class OmDbFakeApi(
+    private val delay: Long = 0L,
+    private val timeUnit: TimeUnit = TimeUnit.MILLISECONDS
+) : OMDbApi {
     override fun search(name: String, page: Int, apiKey: String): Observable<OMDbSearchResult> {
         return Observable.just(
             OMDbSearchResult(
@@ -37,7 +41,7 @@ class OmDbFakeApi : OMDbApi {
                     )
                 ), "4"
             )
-        )
+        ).delay(delay, timeUnit)
     }
 
     override fun details(imdbId: String, apiKey: String): Observable<OMDbMovieDetails> {
@@ -73,6 +77,6 @@ class OmDbFakeApi : OMDbApi {
                 website = "N/A",
                 response = "True"
             )
-        )
+        ).delay(delay, timeUnit)
     }
 }
