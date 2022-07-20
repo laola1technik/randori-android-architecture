@@ -3,7 +3,7 @@ package ag.sportradar.moviedatabase.omdb
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
 
-class OmDbFakeApi(
+class OMDbFakeApi(
     private val delay: Long = 0L,
     private val timeUnit: TimeUnit = TimeUnit.MILLISECONDS
 ) : OMDbApi {
