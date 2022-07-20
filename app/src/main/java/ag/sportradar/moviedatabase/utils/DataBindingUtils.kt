@@ -14,4 +14,6 @@ object DataBindingUtils {
         searchView.setOnQueryTextListener(onQueryTextListener)
 
     }
+
+    //TODO: binding method to set content in recyclerview
 }
