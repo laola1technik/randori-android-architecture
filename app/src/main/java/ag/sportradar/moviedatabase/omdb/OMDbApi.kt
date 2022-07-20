@@ -13,7 +13,7 @@ interface OMDbApi {
     ): Observable<OMDbSearchResult>
 
     @GET
-    fun getMovieDetails(
+    fun details(
         @Query("i") imdbId: String,
         @Query("apikey") apiKey: String
     ): Observable<OMDbMovieDetails>
