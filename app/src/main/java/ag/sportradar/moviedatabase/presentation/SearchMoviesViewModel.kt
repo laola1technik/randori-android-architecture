@@ -2,6 +2,7 @@ package ag.sportradar.moviedatabase.presentation
 
 import ag.sportradar.moviedatabase.omdb.OMDbApi
 import ag.sportradar.moviedatabase.omdb.OMDbSearchResult
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.Scheduler
@@ -15,6 +16,16 @@ class SearchMoviesViewModel(
 
     private val disposables = CompositeDisposable()
     private val viewState = MutableLiveData<SearchResultViewState>(SearchResultViewState.Loading)
+
+    val onQueryTextListener = object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            search(query ?: "")
+            return true
+        }
+
+        override fun onQueryTextChange(newText: String?) = false
+
+    }
 
     fun search(name: String) {
         api.search(name, 1, "")

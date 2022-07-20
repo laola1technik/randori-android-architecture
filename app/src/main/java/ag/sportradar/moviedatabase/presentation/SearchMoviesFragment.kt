@@ -6,14 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchMoviesFragment : Fragment() {
 
-    val searchViewModel: SearchMoviesViewModel by lazy {
-        val viewModelProvider = ViewModelProvider(this)
-        viewModelProvider[SearchMoviesViewModel::class.java]
-    }
+    val searchViewModel: SearchMoviesViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,9 +18,7 @@ class SearchMoviesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentSearchBinding.inflate(inflater)
-
-
-
+        binding.vm = searchViewModel
         return binding.root
     }
 }
