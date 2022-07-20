@@ -1,4 +1,4 @@
-package ag.sportradar.moviedatabase
+package ag.sportradar.moviedatabase.omdb
 
 import com.google.gson.annotations.SerializedName
 
