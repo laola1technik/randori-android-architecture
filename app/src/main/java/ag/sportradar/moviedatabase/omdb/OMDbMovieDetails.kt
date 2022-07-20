@@ -28,12 +28,9 @@ data class OMDbMovieDetails(
     @SerializedName("Production") val production: String? = null,
     @SerializedName("Website") val website: String? = null,
     @SerializedName("Response") val response: String? = null
-
 )
 
 data class Rating(
-
     @SerializedName("Source") var Source: String? = null,
     @SerializedName("Value") var Value: String? = null
-
 )
