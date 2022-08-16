@@ -1,9 +1,11 @@
 package ag.sportradar.moviedatabase.presentation
 
+import ag.sportradar.moviedatabase.itemviewmodel.ItemViewModel
+import ag.sportradar.moviedatabase.itemviewmodel.MovieItemViewModel
 import ag.sportradar.moviedatabase.omdb.OMDbApi
 import ag.sportradar.moviedatabase.omdb.OMDbSearchResult
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.MutableLiveData
+import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.ViewModel
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -15,7 +17,7 @@ class SearchMoviesViewModel(
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
-    val viewState = MutableLiveData<SearchResultViewState>(SearchResultViewState.Loading)
+    val items = ObservableArrayList<ItemViewModel>()
 
     val onQueryTextListener = object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
@@ -27,14 +29,18 @@ class SearchMoviesViewModel(
     }
 
     fun search(name: String) {
-        api.search(name, 1, "")
+        api.search(name, 1, "97e38218")
             .subscribeOn(ioScheduler)
             .observeOn(mainScheduler)
-            .subscribe({ result ->
-                viewState.value = SearchResultViewState.Loaded(result)
-            }, { throwable ->
-                viewState.value =
-                    SearchResultViewState.Error(throwable.message ?: "no error message")
+            .map { searchResult ->
+                searchResult.movies.map { MovieItemViewModel(it) }
+            }
+            .subscribe({
+                items.clear()
+                items.addAll(it)
+            }, {
+                items.clear()
+                //TODO ErrorItemViewModel for no results found
             }).let { disposables.add(it) }
     }
 
